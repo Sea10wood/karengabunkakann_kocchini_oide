@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import VideoWebGL from "../(components)/VideoWebGL";
 import ScrollGridBackground from "../(components)/ScrollGridBackground";
 import Loading from "../(components)/Loading";
@@ -78,9 +79,9 @@ export default function ComingSoon() {
           </div>
           
           <div className="mt-10 flex items-center justify-center gap-4">
-            <a href="/" className="px-6 py-3 rounded-md bg-[var(--color-accent)] text-white hover:bg-[#7e0000] transition-colors ring-accent pulse">
+            <Link href="/" className="px-6 py-3 rounded-md bg-[var(--color-accent)] text-white hover:bg-[#7e0000] transition-colors ring-accent pulse">
               トップページに戻る
-            </a>
+            </Link>
           </div>
         </div>
       </section>

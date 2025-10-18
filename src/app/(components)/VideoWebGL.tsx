@@ -228,7 +228,7 @@ export default function VideoWebGL({ className }: VideoWebGLProps) {
     const startPlayback = async () => {
       try {
         await video.play();
-      } catch (e) {
+      } catch {
         // ユーザージェスチャー待ちの環境対策
       }
 

@@ -46,10 +46,12 @@ export default function OpeningImage({ onComplete }: OpeningImageProps) {
           transition: 'opacity 1s ease-in-out'
         }}
       >
-        <img 
-          src="/akarenga.webp" 
-          alt="赤煉瓦文化館" 
-          className="max-w-full max-h-full object-contain"
+        <Image 
+          src="/akarenga.webp"
+          alt="赤煉瓦文化館"
+          fill
+          priority
+          className="object-contain"
         />
       </div>
     </div>
