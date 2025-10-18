@@ -1,8 +1,11 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #07070a;
+  --foreground: #e6e6e6;
+  --accent: #9e0000; /* 深紅の血色 */
+  --muted: #0d0d12; /* ほの暗い背景 */
+  --ring: #6b0000;
 }
 
 @theme inline {
@@ -10,17 +13,530 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-noto-serif-jp);
+  --font-horror: var(--font-creepster);
+  --color-accent: var(--accent);
+  --color-muted: var(--muted);
+  --color-ring: var(--ring);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* 常にダークベース */
+
+body {
+  background: radial-gradient(1200px 600px at 50% -100px, #101018 0%, #07070a 60%, #030307 100%);
+  color: var(--foreground);
+  font-family: var(--font-noto-serif-jp), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+}
+
+/* 血飛沫風のグラデーションアクセント */
+.blood-accent {
+  background: radial-gradient(400px 180px at 10% 0%, rgba(158,0,0,0.35), transparent 60%),
+              radial-gradient(300px 160px at 90% 10%, rgba(158,0,0,0.2), transparent 60%);
+}
+
+.scanline::after {
+  content: "";
+  position: fixed;
+  pointer-events: none;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 0, 0, 0.04) 0px,
+    rgba(255, 0, 0, 0.04) 1px,
+    transparent 2px,
+    transparent 3px
+  );
+  mix-blend-mode: overlay;
+}
+
+.noise {
+  position: fixed;
+  inset: -50%;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  opacity: .3;
+}
+
+.ring-accent {
+  box-shadow: 0 0 0 1px var(--color-ring), 0 0 60px rgba(158,0,0,0.25) inset;
+}
+
+/* 画面周囲のビネット */
+.vignette::before {
+  content: "";
+  position: fixed;
+  pointer-events: none;
+  inset: 0;
+  background: radial-gradient(90% 65% at 50% 50%, transparent 55%, rgba(0,0,0,0.6) 100%);
+  z-index: 10;
+}
+
+/* 不規則な蛍光灯の点滅 */
+@keyframes flicker {
+  0%, 19%, 21%, 23%, 80%, 100% { opacity: 1; }
+  20%, 22% { opacity: .4; }
+  81%, 84% { opacity: .6; }
+  85% { opacity: .2; }
+}
+.flicker { animation: flicker 5.5s infinite linear; }
+
+/* タイトルのグリッチ */
+@keyframes glitchShift {
+  0% { transform: translate(0,0); }
+  20% { transform: translate(1px,-1px); }
+  40% { transform: translate(-1px,1px); }
+  60% { transform: translate(2px,0); }
+  80% { transform: translate(-2px,0); }
+  100% { transform: translate(0,0); }
+}
+.glitch {
+  position: relative;
+  text-shadow: 1px 0 rgba(158,0,0,0.45), -1px 0 rgba(0,200,200,0.15);
+  animation: glitchShift 2.6s steps(6) infinite;
+}
+
+/* ノイズ風テキスト */
+@keyframes noiseShift {
+  0% { clip-path: inset(0 0 0 0); filter: contrast(110%) brightness(105%); }
+  10% { clip-path: inset(5% 0 15% 0); }
+  20% { clip-path: inset(15% 0 10% 0); }
+  30% { clip-path: inset(25% 0 20% 0); }
+  40% { clip-path: inset(10% 0 25% 0); }
+  50% { clip-path: inset(20% 0 15% 0); }
+  60% { clip-path: inset(12% 0 18% 0); }
+  70% { clip-path: inset(18% 0 12% 0); }
+  80% { clip-path: inset(8% 0 22% 0); }
+  90% { clip-path: inset(22% 0 8% 0); }
+  100% { clip-path: inset(0 0 0 0); }
+}
+.noisy-text {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
+.noisy-text::before,
+.noisy-text::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  will-change: clip-path, transform;
+}
+.noisy-text::before {
+  color: currentColor;
+  text-shadow: -1px 0 rgba(158,0,0,0.9);
+  transform: translateX(-1px);
+  animation: noiseClip1 1.6s steps(20) infinite;
+}
+.noisy-text::after {
+  color: currentColor;
+  text-shadow: 1px 0 rgba(0,200,200,0.7);
+  transform: translateX(1px);
+  animation: noiseClip2 1.8s steps(22) infinite reverse;
+}
+
+/* 記事の手法に基づく、多段 clip-path のノイズ */
+@keyframes noiseClip1 {
+  0% { clip-path: inset(93px 0 21px 0); }
+  5% { clip-path: inset(91px 0 23px 0); }
+  10% { clip-path: inset(89px 0 25px 0); }
+  15% { clip-path: inset(93px 0 21px 0); }
+  20% { clip-path: inset(58px 0 56px 0); }
+  25% { clip-path: inset(56px 0 54px 0); }
+  30% { clip-path: inset(60px 0 54px 0); }
+  35% { clip-path: inset(56px 0 54px 0); }
+  40% { clip-path: inset(32px 0 84px 0); }
+  45% { clip-path: inset(35px 0 81px 0); }
+  50% { clip-path: inset(28px 0 88px 0); }
+  55% { clip-path: inset(22px 0 94px 0); }
+  60% { clip-path: inset(12px 0 102px 0); }
+  65% { clip-path: inset(18px 0 96px 0); }
+  70% { clip-path: inset(8px 0 106px 0); }
+  75% { clip-path: inset(25px 0 90px 0); }
+  80% { clip-path: inset(15px 0 100px 0); }
+  85% { clip-path: inset(93px 0 21px 0); }
+  90% { clip-path: inset(89px 0 25px 0); }
+  95% { clip-path: inset(82px 0 32px 0); }
+  100% { clip-path: inset(87px 0 27px 0); }
+}
+
+@keyframes noiseClip2 {
+  0% { clip-path: inset(10% 0 70% 0); }
+  5% { clip-path: inset(12% 0 64% 0); }
+  10% { clip-path: inset(18% 0 62% 0); }
+  15% { clip-path: inset(8% 0 72% 0); }
+  20% { clip-path: inset(22% 0 58% 0); }
+  25% { clip-path: inset(28% 0 52% 0); }
+  30% { clip-path: inset(24% 0 56% 0); }
+  35% { clip-path: inset(30% 0 50% 0); }
+  40% { clip-path: inset(60% 0 20% 0); }
+  45% { clip-path: inset(56% 0 24% 0); }
+  50% { clip-path: inset(62% 0 18% 0); }
+  55% { clip-path: inset(70% 0 10% 0); }
+  60% { clip-path: inset(64% 0 16% 0); }
+  65% { clip-path: inset(72% 0 8% 0); }
+  70% { clip-path: inset(68% 0 12% 0); }
+  75% { clip-path: inset(50% 0 30% 0); }
+  80% { clip-path: inset(54% 0 26% 0); }
+  85% { clip-path: inset(58% 0 22% 0); }
+  90% { clip-path: inset(62% 0 18% 0); }
+  95% { clip-path: inset(66% 0 14% 0); }
+  100% { clip-path: inset(70% 0 10% 0); }
+}
+
+/* 心拍のような鼓動 */
+@keyframes pulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(158,0,0,0.4); }
+  50% { transform: scale(1.03); box-shadow: 0 0 0 12px rgba(158,0,0,0); }
+}
+.pulse { animation: pulse 2.8s ease-in-out infinite; }
+
+/* カスタムカーソル用 */
+.cursor-dot {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  border-radius: 9999px;
+  background: var(--color-accent);
+  box-shadow: 0 0 12px rgba(158,0,0,.8);
+  pointer-events: none;
+  z-index: 50;
+  transform: translate(-50%, -50%);
+}
+
+/* スクロール連動3Dグリッド背景 */
+@keyframes zoom-in {
+  0% {
+    transform: translateZ(-1000px);
+    opacity: 0;
+    filter: blur(5px);
+  }
+  50% {
+    transform: translateZ(0px);
+    opacity: 1;
+    filter: blur(0px);
+  }
+  100% {
+    transform: translateZ(1000px);
+    opacity: 0;
+    filter: blur(5px);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.stuck-grid {
+  block-size: 100svh;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  display: grid;
+  grid: repeat(4, 25dvh) / repeat(4, 25dvw);
+  place-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: clip;
+  z-index: -10;
+  pointer-events: none;
+}
+
+.stuck-grid > .grid-item {
+  transform-style: preserve-3d;
+  font-size: 5vmin;
+  font-weight: lighter;
+  text-wrap: nowrap;
+  color: rgba(255, 255, 255, 0.3);
+  will-change: transform, opacity, filter;
+}
+
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .stuck-grid > .grid-item {
+      animation: zoom-in linear both;
+      animation-timeline: scroll(root block);
+    }
+    .stuck-grid > .grid-item[data-index="1"] { animation-range: 40% 50%; grid-area: 1/1; }
+    .stuck-grid > .grid-item[data-index="2"] { animation-range: 20% 30%; grid-area: 1/2; }
+    .stuck-grid > .grid-item[data-index="3"] { animation-range: 52% 62%; grid-area: 1/3; }
+    .stuck-grid > .grid-item[data-index="4"] { animation-range: 50% 60%; grid-area: 1/4; }
+    .stuck-grid > .grid-item[data-index="5"] { animation-range: 45% 55%; grid-area: 2/1; }
+    .stuck-grid > .grid-item[data-index="6"] { animation-range: 10% 20%; grid-area: 2/2; }
+    .stuck-grid > .grid-item[data-index="7"] { animation-range: 90% 100%; grid-area: 2/3; }
+    .stuck-grid > .grid-item[data-index="8"] { animation-range: 30% 40%; grid-area: 2/4; }
+    .stuck-grid > .grid-item[data-index="9"] { animation-range: 80% 90%; grid-area: 3/1; }
+    .stuck-grid > .grid-item[data-index="10"] { animation-range: 70% 80%; grid-area: 3/2; }
+    .stuck-grid > .grid-item[data-index="11"] { animation-range: -10% 50%; grid-area: 3/3; grid-row: 2 / span 2; grid-column: 2 / span 2; }
+    .stuck-grid > .grid-item[data-index="12"] { animation-range: 52% 62%; grid-area: 3/4; }
+    .stuck-grid > .grid-item[data-index="13"] { animation-range: 15% 25%; grid-area: 4/1; }
+    .stuck-grid > .grid-item[data-index="14"] { animation-range: 7% 17%; grid-area: 4/2; }
+    .stuck-grid > .grid-item[data-index="15"] { animation-range: 75% 85%; grid-area: 4/3; }
+    .stuck-grid > .grid-item[data-index="16"] { animation-range: 3% 13%; grid-area: 4/4; }
+    .stuck-grid > .grid-item[data-index="17"] { animation-range: 87% 97%; grid-area: 2/1; }
+    .stuck-grid > .grid-item[data-index="18"] { animation-range: 42% 52%; grid-area: 2/2; }
+    .stuck-grid > .grid-item[data-index="19"] { animation-range: 57% 67%; grid-area: 2/3; }
+    .stuck-grid > .grid-item[data-index="20"] { animation-range: 37% 47%; grid-area: 2/4; }
+    .stuck-grid > .grid-item[data-index="21"] { animation-range: 12% 22%; grid-area: 3/1; }
+    .stuck-grid > .grid-item[data-index="22"] { animation-range: 8% 18%; grid-area: 3/2; }
+    .stuck-grid > .grid-item[data-index="23"] { animation-range: 84% 94%; grid-area: 3/3; }
+    .stuck-grid > .grid-item[data-index="24"] { animation-range: 33% 43%; grid-area: 3/4; }
+    .stuck-grid > .grid-item[data-index="25"] { animation-range: 48% 58%; grid-area: 1/1; }
+    .stuck-grid > .grid-item[data-index="26"] { animation-range: 13% 23%; grid-area: 1/2; }
+    .stuck-grid > .grid-item[data-index="27"] { animation-range: 78% 88%; grid-area: 1/3; }
+    .stuck-grid > .grid-item[data-index="28"] { animation-range: 62% 72%; grid-area: 1/4; }
+    .stuck-grid > .grid-item[data-index="29"] { animation-range: 31% 41%; grid-area: 4/1; }
+    .stuck-grid > .grid-item[data-index="30"] { animation-range: 8% 18%; grid-area: 4/2; }
+    .stuck-grid > .grid-item[data-index="31"] { animation-range: 4% 14%; grid-area: 4/3; }
+    .stuck-grid > .grid-item[data-index="32"] { animation-range: 74% 84%; grid-area: 4/4; }
+    .stuck-grid > .grid-item[data-index="33"] { animation-range: 61% 71%; grid-area: 2/1; }
+    .stuck-grid > .grid-item[data-index="34"] { animation-range: 26% 36%; grid-area: 2/2; }
+    .stuck-grid > .grid-item[data-index="35"] { animation-range: 63% 73%; grid-area: 2/3; }
+    .stuck-grid > .grid-item[data-index="36"] { animation-range: 11% 21%; grid-area: 2/4; }
+    .stuck-grid > .grid-item[data-index="37"] { animation-range: 89% 99%; grid-area: 3/1; }
+    .stuck-grid > .grid-item[data-index="38"] { animation-range: 33% 43%; grid-area: 3/2; }
+    .stuck-grid > .grid-item[data-index="39"] { animation-range: 88% 98%; grid-area: 3/3; }
+    .stuck-grid > .grid-item[data-index="40"] { animation-range: 22% 32%; grid-area: 3/4; }
+    .stuck-grid > .grid-item[data-index="41"] { animation-range: 16% 26%; grid-area: 1/1; }
+    .stuck-grid > .grid-item[data-index="42"] { animation-range: 26% 36%; grid-area: 1/2; }
+    .stuck-grid > .grid-item[data-index="43"] { animation-range: 66% 76%; grid-area: 1/3; }
+    .stuck-grid > .grid-item[data-index="44"] { animation-range: 3% 13%; grid-area: 1/4; }
+    .stuck-grid > .grid-item[data-index="45"] { animation-range: 44% 54%; grid-area: 4/1; }
+    .stuck-grid > .grid-item[data-index="46"] { animation-range: 11% 21%; grid-area: 4/2; }
+    .stuck-grid > .grid-item[data-index="47"] { animation-range: 23% 33%; grid-area: 4/3; }
+    .stuck-grid > .grid-item[data-index="48"] { animation-range: 39% 49%; grid-area: 4/4; }
+    .stuck-grid > .grid-item[data-index="49"] { animation-range: 59% 69%; grid-area: 3/1; }
+    .stuck-grid > .grid-item[data-index="50"] { animation-range: 6% 16%; grid-area: 3/2; }
+  }
+}
+
+.stuck-grid > .grid-item.special {
+  grid-row: 2 / span 2;
+  grid-column: 2 / span 2;
+}
+
+.stuck-grid > .grid-item.special > b {
+  font-size: 15vmin;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* ストーリーカードのデザイン */
+.story-card {
+  width: 60vw;
+  max-width: 800px;
+  background: rgba(0, 0, 0, 0.85);
+  border-radius: 12px;
+  padding: 0;
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(158, 0, 0, 0.3);
+}
+
+.story-content {
+  padding: 3rem 4rem;
+  color: #e5e5e5;
+  line-height: 1.8;
+  font-family: var(--font-noto-serif-jp), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+}
+
+.story-title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #9e0000;
+  text-align: center;
+  margin-bottom: 2.5rem;
+  text-shadow: 0 0 20px rgba(158, 0, 0, 0.5);
+  letter-spacing: 0.1em;
+}
+
+.story-paragraph {
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+  text-indent: 1em;
+  color: #d1d1d1;
+}
+
+.story-paragraph:first-of-type {
+  margin-top: 0;
+}
+
+.story-paragraph:last-of-type {
+  margin-bottom: 0;
+}
+
+.story-ending {
+  text-align: center;
+  font-weight: 600;
+  color: #9e0000;
+  font-size: 1.2rem;
+  margin-top: 2rem !important;
+  text-shadow: 0 0 15px rgba(158, 0, 0, 0.4);
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  .story-card {
+    width: 90vw;
+    margin: 0 1rem;
+  }
+  
+  .story-content {
+    padding: 2rem 2rem;
+  }
+  
+  .story-title {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .story-paragraph {
+    font-size: 1rem;
+    margin-bottom: 1.2rem;
+  }
+}
+
+/* 近日公開カードのデザイン */
+.coming-soon-card {
+  width: 100%;
+  max-width: 500px;
+  background: rgba(0, 0, 0, 0.85);
+  border-radius: 12px;
+  padding: 0;
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(158, 0, 0, 0.3);
+}
+
+.coming-soon-content {
+  padding: 2.5rem 3rem;
+  color: #e5e5e5;
+  text-align: center;
+}
+
+.coming-soon-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #9e0000;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 20px rgba(158, 0, 0, 0.5);
+  letter-spacing: 0.1em;
+}
+
+.coming-soon-description {
+  font-size: 1rem;
+  color: #d1d1d1;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.coming-soon-features {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.feature-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: #c1c1c1;
+}
+
+.feature-icon {
+  font-size: 1.5rem;
+  opacity: 0.8;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  .coming-soon-content {
+    padding: 2rem 2rem;
+  }
+  
+  .coming-soon-features {
+    gap: 1.5rem;
+  }
+  
+  .feature-item {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .coming-soon-content {
+    padding: 1.5rem 1.5rem;
+  }
+  
+  .coming-soon-features {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+/* 年表のスタイル */
+.timeline {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.timeline > li {
+  margin-bottom: 60px;
+}
+
+.timeline-date {
+  font-weight: 600;
+  color: #9e0000;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.timeline-content {
+  color: #d1d1d1;
+  line-height: 1.6;
+}
+
+.timeline-content p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+/* for Desktop */
+@media (min-width: 640px) {
+  .timeline > li {
+    overflow: hidden;
+    margin: 0;
+    position: relative;
+    margin-bottom: 40px;
+  }
+  
+  .timeline-date {
+    width: 110px;
+    float: left;
+    margin-top: 20px;
+    margin-bottom: 0;
+    font-size: 1rem;
+  }
+  
+  .timeline-content {
+    width: 75%;
+    float: left;
+    border-left: 3px #9e0000 solid;
+    padding-left: 30px;
+    margin-top: 20px;
+  }
+  
+}
+
+/* 動きが苦手な利用者への配慮 */
+@media (prefers-reduced-motion: reduce) {
+  .flicker, .glitch, .pulse { animation: none !important; }
+  .stuck-grid > .grid-item { animation: none !important; }
 }
