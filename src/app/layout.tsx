@@ -28,11 +28,11 @@ const creepster = Creepster({
 
 export const metadata: Metadata = {
   title: "赤煉瓦文化館~こっちにおいで~",
-  description: "静寂を裂く囁き。闇に手を伸ばす覚悟はあるか。",
+  description: "赤煉瓦文化館~こっちにおいで~",
   metadataBase: new URL("https://example.com"),
   openGraph: {
     title: "赤煉瓦文化館~こっちにおいで~",
-    description: "静寂を裂く囁き。闇に手を伸ばす覚悟はあるか。",
+    description: "赤煉瓦文化館~こっちにおいで~",
     type: "website",
     url: "/",
     images: [
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "赤煉瓦文化館~こっちにおいで~",
-    description: "静寂を裂く囁き。闇に手を伸ばす覚悟はあるか。",
+    description: "赤煉瓦文化館~こっちにおいで~",
     images: ["/og.jpg"],
   },
 };
