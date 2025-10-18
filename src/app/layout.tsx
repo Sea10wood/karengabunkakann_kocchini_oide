@@ -27,11 +27,11 @@ const creepster = Creepster({
 });
 
 export const metadata: Metadata = {
-  title: "呼び声 − 闇に誘う公式サイト",
+  title: "赤煉瓦文化館~こっちにおいで~",
   description: "静寂を裂く囁き。闇に手を伸ばす覚悟はあるか。",
   metadataBase: new URL("https://example.com"),
   openGraph: {
-    title: "呼び声 − 闇に誘う公式サイト",
+    title: "赤煉瓦文化館~こっちにおいで~",
     description: "静寂を裂く囁き。闇に手を伸ばす覚悟はあるか。",
     type: "website",
     url: "/",
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "呼び声 − 闇に誘う公式サイト",
+    title: "赤煉瓦文化館~こっちにおいで~",
     description: "静寂を裂く囁き。闇に手を伸ばす覚悟はあるか。",
     images: ["/og.jpg"],
   },
