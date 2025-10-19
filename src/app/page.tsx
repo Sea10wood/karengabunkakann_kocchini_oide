@@ -66,6 +66,15 @@ export default function Home() {
               <h2 className="story-title">赤煉瓦文化館の歴史</h2>
               
               <ul className="timeline">
+
+              <li>
+                  <div className="timeline-date">1877年</div>
+                  <div className="timeline-content">
+                    <p>明治10年に第十七国立銀行（福岡銀行の前身）の本店が建設されていたが、<br/>
+                    1904年（明治37年）の火災で焼失。その跡地に建設された。</p>
+                  </div>
+                </li>
+
                 <li>
                   <div className="timeline-date">1909年</div>
                   <div className="timeline-content">
@@ -74,28 +83,21 @@ export default function Home() {
                   </div>
                 </li>
                 
-                <li>
-                  <div className="timeline-date">1877年</div>
-                  <div className="timeline-content">
-                    <p>明治10年に第十七国立銀行（福岡銀行の前身）の本店が建設されていたが、<br/>
-                    1904年（明治37年）の火災で焼失。その跡地に建設された。</p>
-                  </div>
-                </li>
                 
                 <li>
-                  <div className="timeline-date">昭和26年頃</div>
+                  <div className="timeline-date">1951年頃</div>
                   <div className="timeline-content">
                     <p>2階の会議室・階上応接室境の煉瓦壁を撤去、階段室吹き抜けの2階部分に床を設置するなどの改造があった。<br/>
                     屋根をスレート葺から現状の銅板葺に改めたのもこの頃とみられる。<br/>
-                    戦後、名称を変更した日本生命保険相互会社福岡支社の社屋として昭和41年まで利用された</p>
+                    戦後、名称を変更した日本生命保険相互会社福岡支社の社屋として1966年まで利用された</p>
                   </div>
                 </li>
                 
                 <li>
-                  <div className="timeline-date">昭和44年</div>
+                  <div className="timeline-date">1969年</div>
                   <div className="timeline-content">
                     <p>3月重要文化財に指定された。同年12月福岡市が買収し、<br/>
-                    昭和47年に福岡市歴史資料館として活用するため改修工事が行われた。<br/>
+                    1972年に福岡市歴史資料館として活用するため改修工事が行われた。<br/>
                     このとき1階事務室前のカウンターグリル、階段室吹き抜け、階段の鉄製手摺、照明器具などを復旧したが、<br/>
                     それとともに空調機器の設置及び収蔵品の展示・保管のため、一部の部屋境の扉を撤去し、<br/>
                     外廻りの窓に鉄製パネルをはめ込むなどの改修が行われた</p>
