@@ -123,6 +123,16 @@ export default function Home() {
       <section id="trial" className="relative py-16 sm:py-24 z-10">
         <div className="container mx-auto px-6 max-w-6xl text-center">
           <p className="text-zinc-300/80 mb-6">プロジェクト詳細</p>
+          <div className="mb-6">
+            <a 
+              href="https://docs.google.com/presentation/d/1XR2qeFh2-eXFvmXNCP_rcPuY32Q4Py2evc_23EDUz78/edit?usp=sharing" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-[var(--color-accent)] hover:text-[#7e0000] transition-colors underline"
+            >
+              スライドを開く
+            </a>
+          </div>
           <div className="flex justify-center">
             <iframe 
               src="https://docs.google.com/presentation/d/e/2PACX-1vSQ2Sd2VAz2Jr1_HuTnW6wNQ7tVZ0y51Pcd8QpVYa5_ymdGkMeYyAgK5CNupSNUiSKTatreDroI_v-a/pubembed?start=false&loop=false&delayms=3000" 
