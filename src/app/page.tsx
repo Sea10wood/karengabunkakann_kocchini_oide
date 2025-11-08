@@ -48,7 +48,7 @@ export default function Home() {
             こっちにおいで。
           </p>
           <div className="mt-10 flex items-center justify-center gap-4">
-            <a href="/coming-soon" className="px-6 py-3 rounded-md bg-[var(--color-accent)] text-white hover:bg-[#7e0000] transition-colors ring-accent pulse">
+            <a href="https://oide-oide.kizuku-hackathon.work/" target="_blank" rel="noopener noreferrer" className="px-6 py-3 rounded-md bg-[var(--color-accent)] text-white hover:bg-[#7e0000] transition-colors ring-accent pulse">
               今すぐ視る
             </a>
             <a href="https://protopedia.net/prototype/7444" target="_blank" rel="noopener noreferrer" className="px-6 py-3 rounded-md border border-zinc-700/80 hover:bg-zinc-900/50 transition-colors">
@@ -68,15 +68,15 @@ export default function Home() {
               <ul className="timeline">
 
               <li>
-                  <div className="timeline-date">1877年</div>
+                  <div className="timeline-date">1877</div>
                   <div className="timeline-content">
                     <p>明治10年に第十七国立銀行（福岡銀行の前身）の本店が建設されていたが、<br/>
-                    1904年（明治37年）の火災で焼失。その跡地に建設された。</p>
+                    1904（明治37年）の火災で焼失。その跡地に建設された。</p>
                   </div>
                 </li>
 
                 <li>
-                  <div className="timeline-date">1909年</div>
+                  <div className="timeline-date">1909</div>
                   <div className="timeline-content">
                     <p>明治42年に日本生命保険株式会社九州支店として建てられた。<br/>
                     （設計:辰野片岡建築事務所（辰野金吾・片岡安）。東京駅舎などの設計）</p>
@@ -85,19 +85,19 @@ export default function Home() {
                 
                 
                 <li>
-                  <div className="timeline-date">1951年頃</div>
+                  <div className="timeline-date">1951頃</div>
                   <div className="timeline-content">
                     <p>2階の会議室・階上応接室境の煉瓦壁を撤去、階段室吹き抜けの2階部分に床を設置するなどの改造があった。<br/>
                     屋根をスレート葺から現状の銅板葺に改めたのもこの頃とみられる。<br/>
-                    戦後、名称を変更した日本生命保険相互会社福岡支社の社屋として1966年まで利用された</p>
+                    戦後、名称を変更した日本生命保険相互会社福岡支社の社屋として1966まで利用された</p>
                   </div>
                 </li>
                 
                 <li>
-                  <div className="timeline-date">1969年</div>
+                  <div className="timeline-date">1969</div>
                   <div className="timeline-content">
                     <p>3月重要文化財に指定された。同年12月福岡市が買収し、<br/>
-                    1972年に福岡市歴史資料館として活用するため改修工事が行われた。<br/>
+                    1972に福岡市歴史資料館として活用するため改修工事が行われた。<br/>
                     このとき1階事務室前のカウンターグリル、階段室吹き抜け、階段の鉄製手摺、照明器具などを復旧したが、<br/>
                     それとともに空調機器の設置及び収蔵品の展示・保管のため、一部の部屋境の扉を撤去し、<br/>
                     外廻りの窓に鉄製パネルをはめ込むなどの改修が行われた</p>
